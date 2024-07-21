@@ -1,0 +1,19 @@
+<%- include('includes/header')-%>
+<section class="container margin-top top">
+  <div>
+    <h1 class="margin-top bold text-center">
+      Welcome Our Blog.<span class="red">io</span>
+    </h1>
+    <%if(blogs.length> 1){%>
+      <div class=" flex-center gap-sm flex-wrap">
+        <% blogs.forEach(function(blog) { %>
+          <div>
+            <h3><%= blog.title%></h3>
+            <a href="detail" class="btn">See more</a>
+          </div>
+        <% }); %>
+      </div>
+    <%}else{%>Blog not in my Site.<%}%>
+  </div>
+</section>
+<%- include('includes/footer')-%>

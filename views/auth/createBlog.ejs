@@ -1,0 +1,23 @@
+<%- include('../includes/header')-%>
+<section class="container margin-top top">
+  <form action="/auth/create-blog" method="post">
+    <div class="flex-center padding-md flex-col gap-sm">
+      <h1>Create Blog</h1>
+      <div class="width-full flex-center flex-col">
+        <label for="title" class="self-start">Title</label
+        ><input class="width-full" type="text" name="title" id="title" required />
+      </div>
+      <div class="width-full flex-center flex-col">
+        <label class="self-start" for="imgUrl">Image</label
+        ><input class="width-full" type="text" name="imgUrl" id="imgUrl" required />
+      </div>
+      <div class="width-full flex-center flex-col">
+        <label class="self-start" for="description">Description</label
+        ><textarea  name="description" id="description" cols="128" rows="5"></textarea>
+      </div>
+     
+    </div>
+    <button class="btn">Register</button>
+  </form>
+</section>
+<%- include('../includes/footer')-%>
