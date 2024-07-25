@@ -4,17 +4,17 @@
     <h1 class="margin-top bold text-center">
       Welcome Our Blog.<span class="red">io</span>
     </h1>
-    <%if(blogs.length> 1){%>
-      <h2>Recent Blog</h2>
-      <div class=" flex-center gap-sm flex-wrap">
-        <% blogs.forEach(function(blog) { %>
-          <div>
-            <h3><%= blog.title%></h3>
-            <span>post by @ <%=blog.userId.username%></span>
-            <a href="detail/<%=blog._id%>" class="btn">See more</a>
-          </div>
-        <% }); %>
+    <%if(blogs.length > 0){%>
+    <h2>Recent Blog</h2>
+    <div class="flex-center gap-sm flex-wrap">
+      <% blogs.forEach(function(blog) { %>
+      <div>
+        <h3><%= blog.title%></h3>
+        <span>post by @ <%=blog.userId.username%></span>
+        <a href="detail/<%=blog._id%>" class="btn">See more</a>
       </div>
+      <% }); %>
+    </div>
     <%}else{%>Blog not in my Site.<%}%>
   </div>
 </section>

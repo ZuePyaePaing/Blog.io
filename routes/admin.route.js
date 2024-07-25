@@ -1,13 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const adminController = require('../controllers/admin.controllers'); // Ensure the correct path
+const adminController = require("../controllers/admin.controllers"); // Ensure the correct path
 
 
-router.get('/create-blog',adminController.renderCreateBlogPage)
+router.get("/create-blog", adminController.renderCreateBlogPage);
 
-router.post('/create-blog' ,adminController.createBlog)
+router.post("/create-blog", adminController.createBlog);
 
-router.get('/edit',adminController.renderEditPage)
+router.get("/edit", adminController.renderEditPage);
 
 router.post("/edit", adminController.editPage);
 

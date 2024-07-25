@@ -50,7 +50,8 @@ p {
   font-size: 16px;
   color: #000000;
 }
-input ,textarea{
+input,
+textarea {
   border: none;
   outline: none;
   border-radius: 10px;
@@ -65,7 +66,7 @@ label {
   font-weight: 600;
   color: #280155;
 }
-form {
+.form {
   padding: 20px;
   width: 1080px;
   height: auto;
@@ -153,8 +154,8 @@ form {
 .red {
   color: rgb(202, 0, 0);
 }
-.bg-red{
-  background-color:  rgb(202, 0, 0);
+.bg-red {
+  background-color: rgb(202, 0, 0);
 }
 .relative {
   position: relative;

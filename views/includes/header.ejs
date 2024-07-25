@@ -32,6 +32,7 @@
             </svg>
           </button>
         </div>
+        <%if(isLogin){%>
         <div class="noti flex-center click">
           <a href="/admin/create-blog" class="icon white">
             <svg
@@ -75,9 +76,16 @@
             alt=""
           />
         </div>
+        <div>
+          <form action="/auth/logout" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button class="btn">Logout</button>
+          </form>
+        </div>
+        <%}else {%>
         <button class="btn"><a href="/auth/register">Register</a></button>
         <button class="btn"><a href="/auth/login">Login</a></button>
-        <img src="" alt="" />
+        <%}%>
       </div>
     </nav>
 

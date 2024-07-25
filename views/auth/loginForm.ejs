@@ -1,6 +1,7 @@
 <%- include('../includes/header')-%>
 <section class="container margin-top top">
   <form action="/auth/login" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <div class="flex-center width-full padding-md">
       <div class="flex-1">
         <h1>Login Form</h1>

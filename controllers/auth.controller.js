@@ -33,8 +33,8 @@ exports.accountLogin = (req, res) => {
     }
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
-        req.session.userInfo = user;
         req.session.isLogin = true;
+        req.session.userInfo = user;
         return req.session.save((err) => {
           res.redirect("/");
         });
@@ -47,4 +47,10 @@ exports.accountLogin = (req, res) => {
 // Render Login Page
 exports.renderLoginPage = (req, res) => {
   res.render("auth/loginForm", { title: "Login Page!" });
+};
+
+exports.accountLogout = (req, res) => {
+  req.session.destroy((err) => {
+    res.redirect("/");
+  });
 };

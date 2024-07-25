@@ -9,6 +9,7 @@
       <a class="btn" href="/edit-blog/<%= blog._id %>">Edit</a>
     </div>
     <form action="/admin/delete/<%= blog._id %>" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button class="btn bg-red">Delete</button>
     </form>
   </div>

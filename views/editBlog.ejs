@@ -1,6 +1,7 @@
 <%- include('includes/header')-%>
 <section class="container margin-top top">
   <form action="/admin/edit" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <div class="flex-center padding-md flex-col gap-sm">
       <h1>Edit Blog</h1>
       <input type="text" name="id" value="<%=blog._id%>" hidden>
