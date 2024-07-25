@@ -1,5 +1,23 @@
 <%- include('includes/header')-%>
-<section>
-  <h1>hell wordl edit page</h1>
+<section class="container margin-top top">
+  <form action="/admin/edit" method="post">
+    <div class="flex-center padding-md flex-col gap-sm">
+      <h1>Edit Blog</h1>
+      <input type="text" name="id" value="<%=blog._id%>" hidden>
+      <div class="width-full flex-center flex-col">
+        <label for="title" class="self-start">Title</label
+        ><input class="width-full" type="text" name="title" id="title" value="<%=blog.title%>" required />
+      </div>
+      <div class="width-full flex-center flex-col">
+        <label class="self-start" for="imgUrl">Image</label
+        ><input class="width-full" type="text" name="imgUrl" id="imgUrl" value="<%=blog.imgUrl%>" required />
+      </div>
+      <div class="width-full flex-center flex-col">
+        <label class="self-start" for="description">Description</label
+        ><textarea  name="description" id="description" cols="128" rows="5"><%=blog.description%></textarea>
+      </div>
+    </div>
+    <button class="btn">Done</button>
+  </form>
 </section>
-<%- include('includes/header')-%>
+<%- include('includes/footer')-%>

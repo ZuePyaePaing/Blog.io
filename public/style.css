@@ -153,6 +153,9 @@ form {
 .red {
   color: rgb(202, 0, 0);
 }
+.bg-red{
+  background-color:  rgb(202, 0, 0);
+}
 .relative {
   position: relative;
 }
@@ -169,7 +172,6 @@ form {
   top: 10px;
   right: 5px;
 }
-
 .icon {
   position: relative;
   width: 30px;

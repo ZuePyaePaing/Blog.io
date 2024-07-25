@@ -34,26 +34,16 @@ app.use(
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-//
-
 // Serve static files
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  User.findById('669c42a1447ac7c6f98652a8')
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch((err) => console.log(err));
-});
-
 // Define routes
 const blogRoute = require("./routes/blog.route");
+const adminRoute = require("./routes/admin.route");
 const authRoute = require("./routes/auth.route");
-const { error } = require("console");
 
-app.use("/", blogRoute);
+app.use(blogRoute);
+app.use("/admin", adminRoute);
 app.use("/auth", authRoute);
 
 //Database Connection
@@ -65,16 +55,5 @@ mongoose
     app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
     });
-    return User.findOne().then((user) => {
-      if (!user) {
-        User.create({
-          username: "Zue Pyae",
-          email: "zuepyae@gmail.com",
-          password: "abcdef",
-        });
-      }
-      return user;
-    });
   })
-  .then((result) => console.log(result))
   .catch((err) => console.log(err));

@@ -1,0 +1,16 @@
+<%- include('includes/header')-%>
+<section class="container margin-top top">
+  <h1>Blog detail page</h1>
+
+  <div>
+    <img src="<%= blog.imgUrl %>" alt="<%= blog.title %>" />
+    <p><%= blog.description %></p>
+    <div>
+      <a class="btn" href="/edit-blog/<%= blog._id %>">Edit</a>
+    </div>
+    <form action="/admin/delete/<%= blog._id %>" method="post">
+      <button class="btn bg-red">Delete</button>
+    </form>
+  </div>
+</section>
+<%- include('includes/footer')-%>
