@@ -7,6 +7,7 @@ const session = require("express-session");
 const mongodbStore = require("connect-mongodb-session")(session);
 const User = require("./models/userSchema");
 const csurf = require("csurf");
+const flash = require("connect-flash");
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -34,6 +35,7 @@ const csrfProtection = csurf();
 
 // Middleware
 app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
   if (req.session.isLogin === undefined) {

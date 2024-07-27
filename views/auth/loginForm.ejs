@@ -1,10 +1,13 @@
 <%- include('../includes/header')-%>
 <section class="container margin-top top">
-  <form action="/auth/login" method="post">
+  <form action="/auth/login" method="post" class="form">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <div class="flex-center width-full padding-md">
       <div class="flex-1">
         <h1>Login Form</h1>
+        <% if(errorMsg){%>
+          <p class=" bg-red width-full"><%=errorMsg%></p>
+          <%}%>
         <div class="">
           <label for="email">Email</label
           ><input
