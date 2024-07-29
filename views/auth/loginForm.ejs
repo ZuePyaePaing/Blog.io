@@ -1,13 +1,13 @@
 <%- include('../includes/header')-%>
 <section class="container margin-top top">
   <form action="/auth/login" method="post" class="form">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <div class="flex-center width-full padding-md">
       <div class="flex-1">
-        <h1>Login Form</h1>
+        <h1>Hello, Welcome!</h1>
         <% if(errorMsg){%>
-          <p class=" bg-red width-full"><%=errorMsg%></p>
-          <%}%>
+        <p class="bg-red width-full"><%=errorMsg%></p>
+        <%}%>
         <div class="">
           <label for="email">Email</label
           ><input
@@ -28,7 +28,10 @@
             required
           />
         </div>
-        <a href="/reset-password">Forget Your Password</a>
+        <button class="btn">Login</button>
+        <a href="/auth/reset-password" class="red btn margin-top"
+          >Forget Your Password</a
+        >
       </div>
       <div class="flex-1">
         <img
@@ -38,7 +41,6 @@
         />
       </div>
     </div>
-    <button class="btn">Login</button>
   </form>
 </section>
 <%- include('../includes/footer')-%>

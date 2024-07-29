@@ -90,6 +90,11 @@ label {
   align-items: center;
   justify-content: space-between;
 }
+.flex-start{
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
 .flex-1 {
   flex: 1;
   width: calc(100%-40%);
