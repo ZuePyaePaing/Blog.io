@@ -1,5 +1,6 @@
 const express = require("express");
 const authControllers = require("../controllers/auth.controller");
+const {check} = require("express-validator");
 
 const router = express.Router();
 
@@ -20,4 +21,5 @@ router.post("/reset-password", authControllers.resetLink);
 router.get("/reset-password/:token", authControllers.renderChangeNewPassword);
 
 router.post("/change-password", authControllers.changeNewPassword);
+
 module.exports = router;

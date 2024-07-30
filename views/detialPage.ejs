@@ -1,17 +1,25 @@
 <%- include('includes/header')-%>
-<section class="container margin-top top">
-  <h1>Blog detail page</h1>
-
-  <div>
-    <img src="<%= blog.imgUrl %>" alt="<%= blog.title %>" />
-    <p><%= blog.description %></p>
-    <div>
+<section>
+  <div class="flex-between">
+    <h1 class="detail-title"><%=blog.title%></h1>
+    <a href="/" class="btn">Go Home</a>
+  </div>
+  <div class="flex-center width-full">
+    <img
+      src="<%= blog.imgUrl %>"
+      alt="<%= blog.title %>"
+      class="detail-img"
+    />
+    <p class="mt-10"><%= blog.description %></p>
+    <%if(blog.userId.toString() ===currentLoginUserId.toString()){%>
+    <div class="flex-between width-full mt-10">
       <a class="btn" href="/edit-blog/<%= blog._id %>">Edit</a>
+      <form action="/admin/delete/<%= blog._id %>" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button class="btn bg-red">Delete</button>
+      </form>
     </div>
-    <form action="/admin/delete/<%= blog._id %>" method="post">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button class="btn bg-red">Delete</button>
-    </form>
+    <%}%>
   </div>
 </section>
 <%- include('includes/footer')-%>

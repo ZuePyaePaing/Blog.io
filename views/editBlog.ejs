@@ -1,24 +1,45 @@
 <%- include('includes/header')-%>
 <section class="container margin-top top">
-  <form action="/admin/edit" method="post">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <div class="flex-center padding-md flex-col gap-sm">
-      <h1>Edit Blog</h1>
-      <input type="text" name="id" value="<%=blog._id%>" hidden>
-      <div class="width-full flex-center flex-col">
-        <label for="title" class="self-start">Title</label
-        ><input class="width-full" type="text" name="title" id="title" value="<%=blog.title%>" required />
+  <div class="register">
+    <h1>Edit Blog</h1>
+    <form action="/admin/edit" method="post" class="inner-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" hidden />
+      <input type="hidden" name="id" value="<%=blog._id%>" hidden />
+      <div class="flex-center">
+        <div class="w-full">
+          <label for="title">Title</label
+          ><input
+            class="w-full"
+            type="text"
+            name="title"
+            id="title"
+            value="<%=blog.title%>"
+            required
+          />
+        </div>
+        <div class="w-full">
+          <label for="imgUrl">Image</label
+          ><input
+            class="w-full"
+            type="text"
+            name="imgUrl"
+            id="imgUrl"
+            value="<%=blog.imgUrl%>"
+            required
+          />
+        </div>
+        <div class="w-full">
+          <label for="description">Description</label
+          ><textarea name="description" id="description" cols="50" rows="5">
+            <%=blog.description%></textarea
+          >
+        </div>
       </div>
-      <div class="width-full flex-center flex-col">
-        <label class="self-start" for="imgUrl">Image</label
-        ><input class="width-full" type="text" name="imgUrl" id="imgUrl" value="<%=blog.imgUrl%>" required />
+      <div class="w-full flex-between">
+        <button class="btn">Done</button>
+        <a href="/" class="btn">Go Home</a>
       </div>
-      <div class="width-full flex-center flex-col">
-        <label class="self-start" for="description">Description</label
-        ><textarea  name="description" id="description" cols="128" rows="5"><%=blog.description%></textarea>
-      </div>
-    </div>
-    <button class="btn">Done</button>
-  </form>
+    </form>
+  </div>
 </section>
 <%- include('includes/footer')-%>

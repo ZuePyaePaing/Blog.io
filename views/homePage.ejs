@@ -1,17 +1,26 @@
 <%- include('includes/header')-%>
-<section class="container margin-top top">
+<section>
   <div>
-    <h1 class="margin-top bold text-center">
-      Welcome Our Blog.<span class="red">io</span>
-    </h1>
+    <h1 class="hero-title">Welcome Our Blog.<span class="red">io.</span></h1>
+
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt,
+      architecto libero ab quis sit fugiat voluptatem omnis perspiciatis tempore
+      hic soluta ipsa exercitationem fugit. Asperiores eaque sapiente vitae ad
+      delectus?
+    </p>
+    <hr />
     <%if(blogs.length > 0){%>
     <h2>Recent Blog</h2>
-    <div class="flex-center gap-sm flex-wrap">
+    <div class="blog-container">
       <% blogs.forEach(function(blog) { %>
-      <div>
-        <h3><%= blog.title%></h3>
-        <span>post by @ <%=blog.userId.username%></span>
-        <a href="detail/<%=blog._id%>" class="btn">See more</a>
+      <div class="blog-card">
+        <img src="<%=blog.imgUrl%>" alt="<%=blog.title%>" class="card_img" />
+        <h3 class="card-title"><%= blog.title%></h3>
+        <div class="flex-between mt-auto">
+          <p>@ <%=blog.userId.username%></p>
+          <a href="detail/<%=blog._id%>" class="btn">See more</a>
+        </div>
       </div>
       <% }); %>
     </div>

@@ -14,7 +14,7 @@ exports.createBlog = (req, res) => {
   });
   newBlog
     .save()
-    .then((result) => res.redirect("/"))
+    .then((_) => res.redirect("/"))
     .catch((err) => console.log(err));
 };
 
@@ -27,14 +27,31 @@ exports.renderEditPage = (req, res) => {
 
 exports.editPage = (req, res) => {
   const { id, title, description, imgUrl } = req.body;
-  Blog.findByIdAndUpdate(id, { title, description, imgUrl })
-    .then((result) => res.redirect("/"))
-    .catch((err) => console.log(err));
+  Blog.findById(id)
+    .then((blog) => {
+      if (!blog) {
+        return res.status(404).send("Blog post not found");
+      }
+      if (blog.userId.toString() !== req.user._id.toString()) {
+        return res.redirect("/");
+      }
+      blog.title = title;
+      blog.imgUrl = imgUrl;
+      blog.description = description;
+      return blog.save();
+    })
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Server Error");
+    });
 };
 
 exports.deleteBlog = (req, res) => {
   const { id } = req.params;
-  Blog.findByIdAndDelete(id)
-    .then((result) => res.redirect("/"))
+  Blog.deleteOne({ _id: id, userId: req.user._id })
+    .then((_) => res.redirect("/"))
     .catch((err) => console.log(err));
 };

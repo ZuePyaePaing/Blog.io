@@ -14,7 +14,11 @@ exports.renderDetailPage = (req, res) => {
   const { id } = req.params;
   Blog.findById(id)
     .then((blog) => {
-      res.render("detialPage", { title: "Detail Blog", blog });
+      res.render("detialPage", {
+        title: "Detail Blog",
+        blog,
+        currentLoginUserId: req.session.userInfo ? req.session.userInfo._id : "",
+      });
     })
     .catch((err) => {
       console.log(err);

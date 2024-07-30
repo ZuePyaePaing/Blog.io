@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 const crypto = require("crypto");
-const { title } = require("process");
 
 //Config nodemailer
 const transpoter = nodemailer.createTransport({
@@ -78,7 +77,6 @@ exports.accountLogin = (req, res) => {
           res.redirect("/");
         });
       }
-
       res.redirect("/auth/login");
     });
   });
