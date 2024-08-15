@@ -195,8 +195,10 @@ textarea {
   margin: auto;
 }
 .error-status {
-  color: red;
-  background-color: yellow;
+  color: rgb(240, 62, 62);
+  background-color: rgb(241, 241, 144);
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .inner-form {

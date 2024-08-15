@@ -13,7 +13,6 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 //Body parser middleware
-
 app.use(bodyparser.urlencoded({ extended: false }));
 
 // connect mongodb session
@@ -22,7 +21,7 @@ const store = new mongodbStore({
   collection: "sessions",
 });
 
-// express session
+// express session middleware
 app.use(
   session({
     secret: process.env.SECRET_KEY,
@@ -31,6 +30,7 @@ app.use(
     store,
   })
 );
+
 const csrfProtection = csurf();
 
 // Middleware
@@ -49,6 +49,7 @@ app.use((req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+// Global middleware
 app.use((req, res, next) => {
   res.locals.isLogin = req.session.isLogin;
   res.locals.userInfo = req.session.userInfo;
@@ -56,26 +57,29 @@ app.use((req, res, next) => {
   next();
 });
 
-// Set view engine
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-
 // Serve static files
 app.use(express.static(path.join(__dirname, "public")));
+
+// Set view engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // Define routes
 const blogRoute = require("./routes/blog.route");
 const adminRoute = require("./routes/admin.route");
 const authRoute = require("./routes/auth.route");
+const errorControllers = require("./controllers/error.controllers");
 const { isLogin } = require("./middleware/isLogin");
 
 app.use(blogRoute);
 app.use("/admin", isLogin, adminRoute);
 app.use("/auth", authRoute);
 
-//Database Connection
+//error handling
+app.all("*", errorControllers.render404Page);
+app.use(errorControllers.render500Page);
 
+//Database Connection
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {

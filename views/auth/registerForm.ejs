@@ -9,15 +9,36 @@
       <%}%>
       <div class="w-full">
         <lable for="name">Name</lable>
-        <input type="text" id="name" name="username"  class="w-full" required/>
+        <input
+          type="text"
+          id="name"
+          name="username"
+          class="w-full"
+          required
+          value="<%=oldData.username%>"
+        />
       </div>
       <div class="w-full">
         <lable for="email">Email</lable>
-        <input type="text" id="email" name="email"  class="w-full" required/>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          class="w-full"
+          required
+          value="<%=oldData.email%>"
+        />
       </div>
       <div class="w-full">
         <lable for="password">Password</lable>
-        <input type="password" id="password" name="password" class="w-full" required />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="w-full"
+          required
+          value="<%=oldData.password%>"
+        />
       </div>
       <button class="btn">Register</button>
     </form>

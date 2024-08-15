@@ -10,18 +10,22 @@ exports.renderHomePage = (req, res) => {
     .catch((err) => console.log(err));
 };
 
-exports.renderDetailPage = (req, res) => {
+exports.renderDetailPage = (req, res, next) => {
   const { id } = req.params;
   Blog.findById(id)
     .then((blog) => {
       res.render("detialPage", {
         title: "Detail Blog",
         blog,
-        currentLoginUserId: req.session.userInfo ? req.session.userInfo._id : "",
+        currentLoginUserId: req.session.userInfo
+          ? req.session.userInfo._id
+          : "",
       });
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error("Something went worung.");
+      return next(error);
     });
 };
 

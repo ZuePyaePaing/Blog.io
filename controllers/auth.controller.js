@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 const crypto = require("crypto");
+const { validationResult } = require("express-validator");
 
 //Config nodemailer
 const transpoter = nodemailer.createTransport({
@@ -19,28 +20,28 @@ const transpoter = nodemailer.createTransport({
 // Handle Register
 exports.createAccount = (req, res) => {
   const { username, email, password } = req.body;
-  User.findOne({ email })
-    .then((user) => {
-      if (user) {
-        req.flash("error", "Email is already defined.");
-        return res.redirect("/auth/register");
-      }
-      return bcrypt
-        .hash(password, 10)
-        .then((hasPassword) => {
-          return User.create({ username, email, password: hasPassword });
-        })
-        .then((_) => {
-          res.redirect("/auth/login");
-          transpoter.sendMail({
-            from: process.env.SENDER_MAIL,
-            to: email,
-            subject: "Register Successful in Blog.io.",
-            html: "<p>Register Successful in Blog.i0. Created account in whit this emial.</P>",
-          });
-        });
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(422).render("auth/registerForm", {
+      title: "Register Form",
+      errorMsg: error.array()[0].msg,
+      oldData: { username, email, password },
+    });
+  }
+  bcrypt
+    .hash(password, 10)
+    .then((hasPassword) => {
+      return User.create({ username, email, password: hasPassword });
     })
-    .catch((err) => console.log(err));
+    .then((_) => {
+      res.redirect("/auth/login");
+      transpoter.sendMail({
+        from: process.env.SENDER_MAIL,
+        to: email,
+        subject: "Register Successful in Blog.io.",
+        html: "<p>Register Successful in Blog.i0. Created account in whit this emial.</P>",
+      });
+    });
 };
 
 //Render Register Page
@@ -54,16 +55,28 @@ exports.renderRegisterPage = (req, res) => {
   res.render("auth/registerForm", {
     title: "Register Page!",
     errorMsg: message,
+    oldData: { username: "", email: "", password: "" },
   });
 };
 
 // Handle Login
 exports.accountLogin = (req, res) => {
   const { email, password } = req.body;
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(422).render("auth/login", {
+      title: "Login Page",
+      errorMsg: error.array()[0].msg,
+      oldData: { email, password },
+    });
+  }
   User.findOne({ email }).then((user) => {
     if (!user) {
-      req.flash("error", "Invalid email or password. Please try again.");
-      return res.redirect("/auth/login");
+      return res.status(422).render("auth/login", {
+        title: "Login Page",
+        errorMsg: "Please enter valid email and password.",
+        oldData: { email, password },
+      });
     }
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
@@ -73,11 +86,14 @@ exports.accountLogin = (req, res) => {
           if (err) {
             console.log(err);
           }
-
           res.redirect("/");
         });
       }
-      res.redirect("/auth/login");
+      return res.status(422).render("auth/login", {
+        title: "Login Page",
+        errorMsg: error.array()[0].msg,
+        oldData: { email, password },
+      });
     });
   });
 };
@@ -93,6 +109,7 @@ exports.renderLoginPage = (req, res) => {
   res.render("auth/loginForm", {
     title: "Login Page!",
     errorMsg: message,
+    oldData: { email: "", password: "" },
   });
 };
 
@@ -121,11 +138,21 @@ exports.renderResetPassword = (req, res) => {
 
 exports.resetLink = (req, res) => {
   const { email } = req.body;
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(422).render("auth/resetPassword", {
+      title: "Reset Password",
+      errorMsg: error.array()[0].msg,
+      oldData: { email },
+    });
+  }
   User.findOne({ email })
     .then((user) => {
       if (!user) {
         req.flash("error", "This email dose not have an account.");
-        return res.redirect("/auth/reset-password");
+        return res.redirect("/auth/reset-password", {
+          title: "Reset Password",
+        });
       }
       const token = crypto.randomBytes(32).toString("hex");
       user.token = token;
@@ -157,7 +184,7 @@ exports.renderChangeNewPassword = (req, res) => {
       } else {
         message = null;
       }
-      
+
       res.render("auth/changeNewPassword", {
         title: "Reset password",
         errorMsg: message,
@@ -171,12 +198,18 @@ exports.renderChangeNewPassword = (req, res) => {
 //handle Change new password
 exports.changeNewPassword = (req, res) => {
   const { password, confirm_password, token, userId } = req.body;
-
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(422).render(`/auth/change-password/${token}`, {
+      title: "Reset Password",
+      errorMsg: error.array()[0].msg,
+      oldData: { email },
+    });
+  }
   if (password !== confirm_password) {
     req.flash("error", "Passwords do not match.");
     return res.redirect(`/auth/change-password/${token}`);
   }
-
   User.findOne({
     token,
     expiration: { $gt: Date.now() },
@@ -199,6 +232,6 @@ exports.changeNewPassword = (req, res) => {
       res.redirect("/auth/login");
     })
     .catch((err) => {
-      console.error("Error during password reset:", err); 
+      console.error("Error during password reset:", err);
     });
 };
